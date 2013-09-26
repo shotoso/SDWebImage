@@ -44,32 +44,17 @@ static char operationArrayKey;
     [self setImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:completedBlock];
 }
 
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock
-{
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock {
     [self cancelCurrentImageLoad];
 
     self.image = placeholder;
     
-    if (url)
-    {
+    if (url) {
         __weak UIImageView *wself = self;
-        id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-        {
+        id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
             if (!wself) return;
-            dispatch_main_sync_safe(^
-            {
-                __strong UIImageView *sself = wself;
-                if (!sself) return;
-                if (image)
-                {
-                    sself.image = image;
-                    [sself setNeedsLayout];
-                }
-                if (completedBlock && finished)
-                {
-                    completedBlock(image, error, cacheType);
-                }
-            });
+            if (completedBlock && finished)
+                completedBlock(image, error, cacheType);
         }];
         objc_setAssociatedObject(self, &operationKey, operation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
