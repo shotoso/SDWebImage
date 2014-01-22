@@ -32,13 +32,6 @@
 			remoteGlobalIDString = 53761325155AD0D5005750A4;
 			remoteInfo = SDWebImage;
 		};
-		53EEC1AE164845D9007601E1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 53EEC1A3164845D8007601E1 /* SDWebImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 531041E0157EAFA400BBABC3;
-			remoteInfo = "SDWebImage+MKAnnotation";
-		};
 		53EEC1B0164845E3007601E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 53EEC1A3164845D8007601E1 /* SDWebImage.xcodeproj */;
@@ -153,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				53EEC1AD164845D9007601E1 /* libSDWebImage.a */,
-				53EEC1AF164845D9007601E1 /* libSDWebImage+MKAnnotation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,13 +209,6 @@
 			fileType = archive.ar;
 			path = libSDWebImage.a;
 			remoteRef = 53EEC1AC164845D9007601E1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		53EEC1AF164845D9007601E1 /* libSDWebImage+MKAnnotation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libSDWebImage+MKAnnotation.a";
-			remoteRef = 53EEC1AE164845D9007601E1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

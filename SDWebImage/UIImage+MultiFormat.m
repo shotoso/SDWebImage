@@ -9,10 +9,6 @@
 #import "UIImage+MultiFormat.h"
 #import "UIImage+GIF.h"
 
-#ifdef SD_WEBP
-#import "UIImage+WebP.h"
-#endif
-
 @implementation UIImage (MultiFormat)
 
 + (UIImage *)sd_imageWithData:(NSData *)data
@@ -27,13 +23,6 @@
     {
         image = [[UIImage alloc] initWithData:data];
     }
-
-#ifdef SD_WEBP
-    if (!image) // TODO: detect webp signature
-    {
-        image = [UIImage sd_imageWithWebPData:data];
-    }
-#endif
 
     return image;
 }

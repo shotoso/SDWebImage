@@ -101,11 +101,8 @@
 
     if (!url || (!(options & SDWebImageRetryFailed) && isFailedUrl))
     {
-        dispatch_main_sync_safe(^
-        {
-                NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil];
-                completedBlock(nil, error, SDImageCacheTypeNone, YES);
-        });
+        NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil];
+        completedBlock(nil, error, SDImageCacheTypeNone, YES);
         return operation;
     }
 
@@ -131,12 +128,9 @@
         {
             if (image && options & SDWebImageRefreshCached)
             {
-                dispatch_main_sync_safe(^
-                {
-                    // If image was found in the cache bug SDWebImageRefreshCached is provided, notify about the cached image
-                    // AND try to re-download it in order to let a chance to NSURLCache to refresh it from server.
-                    completedBlock(image, nil, cacheType, YES);
-                });
+                // If image was found in the cache bug SDWebImageRefreshCached is provided, notify about the cached image
+                // AND try to re-download it in order to let a chance to NSURLCache to refresh it from server.
+                completedBlock(image, nil, cacheType, YES);
             }
 
             // download if no image or requested to refresh anyway, and download allowed by delegate
@@ -155,17 +149,11 @@
             {                
                 if (weakOperation.isCancelled)
                 {
-                    dispatch_main_sync_safe(^
-                    {
-                        completedBlock(nil, nil, SDImageCacheTypeNone, finished);
-                    });
+                    completedBlock(nil, nil, SDImageCacheTypeNone, finished);
                 }
                 else if (error)
                 {
-                    dispatch_main_sync_safe(^
-                    {
-                        completedBlock(nil, error, SDImageCacheTypeNone, finished);
-                    });
+                    completedBlock(nil, error, SDImageCacheTypeNone, finished);
 
                     if (error.code != NSURLErrorNotConnectedToInternet)
                     {
@@ -204,10 +192,7 @@
                     }
                     else
                     {
-                        dispatch_main_sync_safe(^
-                        {
-                            completedBlock(downloadedImage, nil, SDImageCacheTypeNone, finished);
-                        });
+                        completedBlock(downloadedImage, nil, SDImageCacheTypeNone, finished);
 
                         if (downloadedImage && finished)
                         {
@@ -228,10 +213,7 @@
         }
         else if (image)
         {
-            dispatch_main_sync_safe(^
-            {
-                completedBlock(image, nil, cacheType, YES);
-            });
+            completedBlock(image, nil, cacheType, YES);
             @synchronized(self.runningOperations)
             {
                 [self.runningOperations removeObject:operation];
@@ -240,10 +222,7 @@
         else
         {
             // Image not in cache and download disallowed by delegate
-            dispatch_main_sync_safe(^
-            {
-                completedBlock(nil, nil, SDImageCacheTypeNone, YES);
-            });
+            completedBlock(nil, nil, SDImageCacheTypeNone, YES);
             @synchronized(self.runningOperations)
             {
                 [self.runningOperations removeObject:operation];
