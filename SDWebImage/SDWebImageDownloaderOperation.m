@@ -11,14 +11,14 @@
 #import "UIImage+MultiFormat.h"
 #import <ImageIO/ImageIO.h>
 
-@interface SDWebImageDownloaderOperation ()
+@interface SDWebImageDownloaderOperation () {
+    BOOL _executing, _finished;
+}
 
 @property (copy, nonatomic) SDWebImageDownloaderProgressBlock progressBlock;
 @property (copy, nonatomic) SDWebImageDownloaderCompletedBlock completedBlock;
 @property (copy, nonatomic) void (^cancelBlock)();
 
-@property (assign, nonatomic, getter = isExecuting) BOOL executing;
-@property (assign, nonatomic, getter = isFinished) BOOL finished;
 @property (assign, nonatomic) long long expectedSize;
 @property (strong, nonatomic) NSMutableData *imageData;
 @property (strong, nonatomic) NSURLConnection *connection;
@@ -40,8 +40,8 @@
         _progressBlock = [progressBlock copy];
         _completedBlock = [completedBlock copy];
         _cancelBlock = [cancelBlock copy];
-        _executing = NO;
-        _finished = NO;
+        self.executing = NO;
+        self.finished = NO;
         _expectedSize = 0;
         responseFromCached = YES; // Initially wrong until `connection:willCacheResponse:` is called or not called
     }
@@ -192,7 +192,7 @@
         // Thanks to the author @Nyx0uf
 
         // Get the total bytes downloaded
-        const NSUInteger totalSize = self.imageData.length;
+        const long long totalSize = self.imageData.length;
 
         // Update the data source, we must pass ALL the data, not just the new bytes
         CGImageSourceRef imageSource = CGImageSourceCreateIncremental(NULL);
